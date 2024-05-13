@@ -230,7 +230,7 @@ function CreateSurvey({ accessToken }) {
                 animate={{ height: openQueue === queue.name ? "auto" : 0 }}
                 transition={{ type: "spring", stiffness: 200, duration: 0.1 }}
                 key={queue.name}
-                className={`overflow-hidden transition-height w-full rounded-md px-2  bg-shade4 ${
+                className={`overflow-hidden transition-height w-full rounded-md px-2 pt-2   ${
                   openQueue === queue.name ? "h-auto duration-150" : "h-0"
                 }`}
               >

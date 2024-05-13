@@ -280,7 +280,7 @@ const Templets = ({ accessToken }) => {
   ];
 
   return (
-    <div className="mt-5 ">
+    <div className="mt-5 px-7 ">
       <motion.div initial={{ scale: 0 }} animate={{ scale: 1 }}>
         <React.Fragment>
           <Dialog

@@ -68,7 +68,7 @@ const QueueStatistics = ({ accessToken, agentData }) => {
   };
 
   return (
-    <div className="mt-5 pr-8">
+    <div className="mt-5 px-7">
       {loading ? (
         <div className="w-full h-[calc(100vh-40px)] flex justify-center items-center">
           <img
