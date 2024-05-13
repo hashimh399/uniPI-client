@@ -1,7 +1,6 @@
-import React, { useState, useEffect } from "react";
-import axios from "axios";
+import React, { useState } from "react";
+
 import "../../styles/agentPerformance.css";
-import { useWebSocket } from "../../services/WebScoketContext";
 
 const TeamPerformance = () => {
   const [performanceData, setPerformanceData] = useState([]);

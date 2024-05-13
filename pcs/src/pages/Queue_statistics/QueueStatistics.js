@@ -1,10 +1,7 @@
 import React from "react";
-import Pagination from "@mui/material/Pagination";
-import PaginationItem from "@mui/material/PaginationItem";
-import Stack from "@mui/material/Stack";
+
 import { motion, AnimatePresence } from "framer-motion";
-import ArrowBackIcon from "@mui/icons-material/ArrowBack";
-import ArrowForwardIcon from "@mui/icons-material/ArrowForward";
+
 import axios from "axios";
 import noData from "../../assets/no_data.jpg";
 import "../../styles/queue.css";

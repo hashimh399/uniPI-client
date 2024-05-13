@@ -75,7 +75,7 @@ if (cluster.isMaster) {
           console.error("Error occurred during Webex redirection:", err);
           return res.status(500).json({ error: "Internal server error" });
         }
-        res.redirect("http://localhost:3000/?authenticated=true");
+        res.redirect("http://localhost:3000");
       });
     } catch (error) {
       console.error("Error occurred during Webex redirection:", error);
