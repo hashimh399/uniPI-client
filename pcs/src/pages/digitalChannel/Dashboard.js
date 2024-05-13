@@ -15,7 +15,7 @@ const DigitalDashboard = () => {
       initial={{ opacity: 0, x: 20, origin: "center" }}
       animate={{ opacity: 1, x: 0 }}
       transition={{ duration: 0.2, type: "spring", stiffness: 100 }}
-      className="mt-4 w-11/12 "
+      className="mt-4 w-11/12 px-7 "
     >
       <h1 className="font-semibold text-xl">Dashbaord</h1>
       <p className="text-sm text-slate-600">
@@ -41,7 +41,6 @@ const DigitalDashboard = () => {
         </ul>
       </nav>
 
-      {/* ******************** routes ***************** */}
       <div className=" ">
         <Outlet />
       </div>

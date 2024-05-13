@@ -34,7 +34,7 @@ function Home({
   };
   const [refreshClick, setRefreshClick] = useState(false);
   return (
-    <div className="   relatives bg-slate-100 ">
+    <div className="   relatives bg-slate-100  ">
       {/* sidebar */}
 
       {/* <Sidebar signOut={signOut} showLoader={showLoader} /> */}
@@ -48,7 +48,7 @@ function Home({
         />
       </div>
       <div
-        className={`${open ? "w-[calc(100vw-270px)] duration-300" : "w-[calc(100vw-80px)] duration-300"} float-right mb-[60px]  `}
+        className={`${open ? "w-[calc(100vw-240px)] duration-300 " : "w-[calc(100vw-60px)] duration-300 "} float-right mb-[60px]   `}
       >
         <div className="fixed right-4 top-2">
           {" "}
@@ -72,7 +72,10 @@ function Home({
               path="edit"
               element={<CreateSurvey accessToken={accessToken} />}
             ></Route>
-            <Route path="audio" element={<AudioFiles />}></Route>
+            <Route
+              path="audio"
+              element={<AudioFiles accessToken={accessToken} />}
+            ></Route>
             <Route
               path="templet"
               element={<Templets accessToken={accessToken} />}

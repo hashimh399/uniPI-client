@@ -1,11 +1,13 @@
-// *************************************************************************************
-
 import React, { useState, useRef, useEffect } from "react";
 import { motion } from "framer-motion";
 import { DNA } from "react-loader-spinner";
 import axios from "axios";
+import noData from "../assets/no_data.jpg";
 import { MdOutlineArrowRight } from "react-icons/md";
 import { Audio } from "react-loader-spinner";
+import { TextField, IconButton } from "@mui/material";
+import { Search } from "@mui/icons-material";
+
 function CreateSurvey({ accessToken }) {
   const [inputTexts, setInputTexts] = useState(["", "", ""]);
   const [loadingStates, setLoadingStates] = useState([false, false, false]);
@@ -19,6 +21,8 @@ function CreateSurvey({ accessToken }) {
   const [live, setLive] = useState(false);
   const [queueWiseData, setQueueWiseData] = useState({});
   const [openQueue, setOpenQueue] = useState(null);
+  const [searchQuery, setSearchQuery] = useState("");
+  const [filteredData, setFilteredData] = useState([]);
 
   const placeholder = [
     "How would you rate the agent on a scale of 1 to 5?",
@@ -35,9 +39,6 @@ function CreateSurvey({ accessToken }) {
   const fetchData = async () => {
     try {
       setLoading(true);
-      const date = new Date();
-      const to = date.getTime();
-      const from = date.getTime() - 24 * 60 * 60 * 1000;
 
       const headers = {
         "Content-Type": "application/json",
@@ -45,7 +46,7 @@ function CreateSurvey({ accessToken }) {
       };
 
       const response = await axios.get(
-        `https://api.wxcc-us1.cisco.com/v1/queues/statistics?from=${from}&to=${to}&orgId=69fc3aba-280a-4f8e-b449-2c198d78569b`,
+        `https://api.wxcc-us1.cisco.com/organization/69fc3aba-280a-4f8e-b449-2c198d78569b/v2/contact-service-queue`,
         {
           headers: headers,
         }
@@ -66,6 +67,7 @@ function CreateSurvey({ accessToken }) {
       });
 
       setQueueWiseData(queueData); // Set the queue wise data
+      setFilteredData(response.data.data); // Initially set filtered data to all data
     } catch (error) {
       setError(error);
       setLoading(false);
@@ -124,8 +126,8 @@ function CreateSurvey({ accessToken }) {
   };
 
   const handleExport = (index) => {
-    inputRefs[index].current.disabled = true; // Disable the current input
-    inputRefs[index].current.value = ""; // Clear input value
+    inputRefs[index].current.disabled = true;
+    inputRefs[index].current.value = "";
     inputRefs[index].current.blur(); // Remove focus from the current input
 
     if (index + 1 < inputTexts.length) {
@@ -156,14 +158,44 @@ function CreateSurvey({ accessToken }) {
     }
   };
 
+  const handleSearchInputChange = (event) => {
+    const { value } = event.target;
+    setSearchQuery(value);
+    const filtered = data.filter((item) =>
+      item.name.toLowerCase().includes(value.toLowerCase())
+    );
+    setFilteredData(filtered);
+  };
+
   const handleSelectedQueue = (queueId) => {
     setOpenQueue(queueId === openQueue ? null : queueId);
   };
 
   return (
-    <div className="containe mt-5 pr-6">
+    <div className="containe   relative">
+      {/* Search menu */}
+      <div className="w-full bg-shade1  fixed top-0  p-4 py-3">
+        <div className="bg-slate-200 rounded-md inline-block ">
+          <TextField
+            placeholder="Search queue..."
+            variant="outlined"
+            size="small"
+            value={searchQuery}
+            onChange={handleSearchInputChange}
+            InputProps={{
+              endAdornment: (
+                <IconButton>
+                  <Search />
+                </IconButton>
+              ),
+            }}
+          />
+        </div>
+      </div>
+
+      {/* Render queues based on filtered data */}
       {loading ? (
-        <div className="w-full h-[calc(100vh-60px)] flex justify-center items-center">
+        <div className="w-full h-[calc(100vh-60px)]  flex justify-center items-center">
           <DNA
             visible={true}
             height="130"
@@ -173,41 +205,40 @@ function CreateSurvey({ accessToken }) {
             wrapperClass="dna-wrapper"
           />
         </div>
-      ) : (
+      ) : filteredData.length > 0 ? (
         <motion.div
           initial={{ y: -100 }}
           animate={{ y: 0 }}
-          className="flex flex-col gap-2"
+          className="flex flex-col gap-2 mt-20 pl-7"
         >
-          {Object.keys(queueWiseData).map((queueId, index) => (
+          {filteredData.map((queue, index) => (
             <div
-              key={queueId}
-              className="bg-gray-200 px-4 py-2 rounded flex flex-col justify-between  items-start   hover:bg-gray-300 transition-colors"
+              key={index}
+              className="  px-4 py-2 rounded flex flex-col justify-between  items-start     transition-colors"
             >
-              <div className="flex gap-2 w-full font-bold text-lg  justify-between">
-                {" "}
-                <h1>{queueWiseData[queueId][0].queueName}</h1>
+              <div className="flex gap-2 bg-[#d2dbe1] px-3 py-2 rounded-md w-full font-bold text-lg  justify-between">
+                <h1>{queue.name}</h1>
                 <MdOutlineArrowRight
                   className={`text-xl cursor-pointer transform transition-transform ${
-                    openQueue === queueId ? "rotate-90" : ""
+                    openQueue === queue.name ? "rotate-90" : ""
                   }`}
-                  onClick={() => toggleQueue(queueId)}
+                  onClick={() => toggleQueue(queue.name)}
                 />
               </div>
 
               <motion.div
-                animate={{ height: openQueue === queueId ? "auto" : 0 }}
+                animate={{ height: openQueue === queue.name ? "auto" : 0 }}
                 transition={{ type: "spring", stiffness: 200, duration: 0.1 }}
-                key={queueId}
-                className={`overflow-hidden transition-height  mt-5   ${
-                  openQueue === queueId ? "h-auto duration-150" : "h-0"
+                key={queue.name}
+                className={`overflow-hidden transition-height w-full rounded-md px-2  bg-shade4 ${
+                  openQueue === queue.name ? "h-auto duration-150" : "h-0"
                 }`}
               >
                 {/* Render input fields */}
                 {inputTexts.map((inputText, index) => (
                   <div
                     key={index}
-                    className="mb-2 flex flex-row gap-2 items-center"
+                    className="mb-2 flex flex-row gap-2 items-center "
                   >
                     {/* Checkbox */}
                     <input
@@ -275,9 +306,11 @@ function CreateSurvey({ accessToken }) {
             </div>
           ))}
         </motion.div>
+      ) : (
+        <div className="w-full h-[calc(100vh-60px)] flex justify-center items-center">
+          <img src={noData} width="400px" alt="no data found"></img>
+        </div>
       )}
-
-      {/* Displaying Queue Names */}
     </div>
   );
 }

@@ -10,7 +10,7 @@ import { motion } from "framer-motion";
 function Dashboard({ allData, getAllDetails, agentData }) {
   return (
     <motion.div
-      className="  "
+      className=" px-7 "
       initial={{ opacity: 0, x: 20, origin: "center" }}
       animate={{ opacity: 1, x: 0 }}
       transition={{ duration: 0.2, type: "spring", stiffness: 100 }}

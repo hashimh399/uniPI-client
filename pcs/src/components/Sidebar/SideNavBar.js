@@ -298,9 +298,9 @@ const SideBar = ({
               stiffness: 200,
               origin: 0,
             }}
-            className="absolute bottom-16 px-3"
+            className="absolute bottom-16 px-3 border-t-2  border-shade1 w-full "
           >
-            <p className="text-sm -ml-[.4rem] flex gap-2 items-center cursor-pointer ">
+            <p className="text-sm -ml-[.4rem] flex gap-2 pt-2 items-center  cursor-pointer ">
               {agentData && agentData.displayName && (
                 <Tooltip title="Account">
                   <IconButton
