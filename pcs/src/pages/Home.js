@@ -80,15 +80,6 @@ function Home({
               path="templet"
               element={<Templets accessToken={accessToken} />}
             ></Route>
-            <Route
-              path="queue"
-              element={
-                <QueueStatistics
-                  accessToken={accessToken}
-                  agentData={agentData}
-                />
-              }
-            ></Route>
           </Route>
           <Route
             path="/queueStatistics"

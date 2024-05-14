@@ -9,7 +9,7 @@ import { MdOutlineMotionPhotosPause } from "react-icons/md";
 import { RiChatSmile2Line } from "react-icons/ri";
 import { PiClockCounterClockwiseFill } from "react-icons/pi";
 
-function ChatTraffic(agentData) {
+function ChatTraffic({agentData, className}) {
   const teams = [
     { value: "team1", label: "Team 1" },
     { value: "team2", label: "Team 2" },

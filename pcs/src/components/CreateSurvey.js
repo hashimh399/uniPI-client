@@ -214,9 +214,12 @@ function CreateSurvey({ accessToken }) {
           {filteredData.map((queue, index) => (
             <div
               key={index}
-              className="  px-4 py-2 rounded flex flex-col justify-between  items-start     transition-colors"
+              className="  px-4 cursor-pointer py-2 rounded flex flex-col justify-between  items-start     transition-colors"
             >
-              <div className="flex gap-2 bg-[#d2dbe1] px-3 py-2 rounded-md w-full font-bold text-lg  justify-between">
+              <div
+                onClick={() => toggleQueue(queue.name)}
+                className="flex gap-2 hover:bg-slate-300 bg-[#d2dbe1] px-3 py-2 rounded-md w-full font-bold text-lg  justify-between"
+              >
                 <h1>{queue.name}</h1>
                 <MdOutlineArrowRight
                   className={`text-xl cursor-pointer transform transition-transform ${

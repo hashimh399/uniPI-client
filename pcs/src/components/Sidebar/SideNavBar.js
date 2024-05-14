@@ -91,11 +91,6 @@ const routes = [
         name: "Audio Files ",
         icon: <MdQueueMusic />,
       },
-      {
-        path: "/voice-survey/queue",
-        name: "Queue Statistics",
-        icon: <PiQueueFill />,
-      },
     ],
   },
 ];

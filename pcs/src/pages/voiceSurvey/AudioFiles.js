@@ -7,7 +7,7 @@ const AudioFiles = ({ accessToken }) => {
   const fetchAudioFiles = async () => {
     try {
       const url =
-        "https://api.wxcc-us1.cisco.com/organization/69fc3aba-280a-4f8e-b449-2c198d78569b/v2/audio-file";
+        "https://api.wxcc-us1.cisco.com/organization/69fc3aba-280a-4f8e-b449-2c198d78569b/v2/audio-file?includeUrl=true";
       const headers = {
         "content-Type": "application/json",
         Authorization: `Bearer ${accessToken}`,
