@@ -5,7 +5,7 @@ import axios from "axios";
 import noData from "../assets/no_data.jpg";
 import { MdOutlineArrowRight } from "react-icons/md";
 import { Audio } from "react-loader-spinner";
-import { TextField, IconButton } from "@mui/material";
+import { TextField, IconButton, Button } from "@mui/material";
 import { Search } from "@mui/icons-material";
 
 function CreateSurvey({ accessToken }) {
@@ -264,7 +264,7 @@ function CreateSurvey({ accessToken }) {
                       autoFocus={activeInput === index}
                     />
                     {/* TTS Button */}
-                    <button
+                    <Button
                       className="bg-blue-500 hover:bg-blue-700 flex justify-center items-center max-w-28 duration-300 text-white font-bold py-2 px-4 rounded"
                       onClick={() => handleTTS(index)}
                       disabled={
@@ -286,7 +286,7 @@ function CreateSurvey({ accessToken }) {
                       ) : (
                         "TTS"
                       )}
-                    </button>
+                    </Button>
                     {/* Audio Player */}
                     {audioUrls[index] && (
                       <audio controls className="ml-4">
@@ -319,3 +319,5 @@ function CreateSurvey({ accessToken }) {
 }
 
 export default CreateSurvey;
+
+// ***********************************************************************************************************

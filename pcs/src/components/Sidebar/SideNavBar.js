@@ -183,21 +183,21 @@ const SideBar = ({
       width: 0,
       opacity: 0,
       transition: {
-        duration: 0.1,
+        duration: 0.3,
       },
     },
     show: {
       opacity: 1,
       width: "auto",
       transition: {
-        duration: 0.1,
+        duration: 0.3,
       },
     },
   };
 
   return (
     <>
-      <div className="main-container relative   ">
+      <div className="main-container relative  z-40 ">
         <motion.div
           animate={{
             width: isOpen ? "240px" : "60px",
@@ -208,13 +208,6 @@ const SideBar = ({
             },
           }}
           className={`sidebar  `}
-          // onClick={toggle}
-          // onMouseEnter={() => {
-          //   setIsOpen(true);
-          // }}
-          // onMouseLeave={() => {
-          //   setIsOpen(false);
-          // }}
         >
           <div className="top_section border-b-2 border-shade1  bg-shade1 ">
             <AnimatePresence>

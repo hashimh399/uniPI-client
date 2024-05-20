@@ -75,8 +75,8 @@ const Chat = () => {
             <TableRow>
               <TableCell>S.No.</TableCell>
               <TableCell>Queue Name</TableCell>
-              <TableCell>Queue ID</TableCell>
-              <TableCell>Interval start time</TableCell>
+
+              <TableCell> start time</TableCell>
               <TableCell>Service Level Threshold %</TableCell>
               <TableCell>Avg. Enqueued Time</TableCell>
               <TableCell>Avg. Handled Time</TableCell>
@@ -90,7 +90,7 @@ const Chat = () => {
                 <TableRow key={index}>
                   <TableCell>{index + 1}</TableCell>
                   <TableCell>{item.queueName}</TableCell>
-                  <TableCell>{item.queueId}</TableCell>
+
                   <TableCell>
                     {new Date(item?.intervalStartTime).toLocaleString()}
                   </TableCell>
