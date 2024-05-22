@@ -25,7 +25,6 @@ export default function AddAudioDialog({ audioFiles, sortAudioFiles }) {
     setOpen(false);
   };
 
-  const [currentAudioFile, setCurrentAudioFile] = useState("");
   const [addInputText, setAddInputText] = useState("");
   const [audioName, setAudioName] = useState("");
   const [audioUrl, setAudioUrl] = useState("");
@@ -39,13 +38,11 @@ export default function AddAudioDialog({ audioFiles, sortAudioFiles }) {
 
   React.useEffect(() => {
     sortAudioFiles();
-    setCurrentAudioFile(audioFiles && audioFiles[0] && audioFiles[0].names);
   }, [audioUrl]);
 
   const handleCreateNew = () => {
     setAudioUrl("");
     setAddInputText("");
-    setCurrentAudioFile("");
   };
   // Send post request for TTS
   const sendPostRequest = async (text, name) => {
@@ -110,7 +107,6 @@ export default function AddAudioDialog({ audioFiles, sortAudioFiles }) {
     setAudioUrl(audioUrl);
 
     sortAudioFiles();
-    setCurrentAudioFile(audioFiles && audioFiles[0] && audioFiles[0].name);
   };
 
   const handleSubmit = async () => {
@@ -146,44 +142,11 @@ export default function AddAudioDialog({ audioFiles, sortAudioFiles }) {
       >
         <DialogTitle>Add audio file</DialogTitle>
         <DialogContent>
-          <DialogContentText>
-            Create or select any audio file.
-          </DialogContentText>
-          <TextField
-            sx={{ mb: 1 }}
-            disabled
-            margin="dense"
-            id="name"
-            value={currentAudioFile}
-            name="currentValue"
-            type="text"
-            fullWidth
-            variant="standard"
-          />
-          <TextField
-            sx={{ mt: 3 }}
-            select
-            label="Audio File"
-            value={selectedAudio}
-            onChange={(e) => setSelectedAudio(e.target.value)}
-            fullWidth
-          >
-            {audioFiles &&
-              audioFiles.length > 0 &&
-              audioFiles?.map((data, index) =>
-                audioFiles.length !== 0 ? (
-                  <MenuItem key={index} value={data?.name}>
-                    {`${index + 1} :-  ${data?.name}`}
-                  </MenuItem>
-                ) : (
-                  <p className="text-center font-semibold ">NO data found</p>
-                )
-              )}
-          </TextField>
+          <DialogContentText>Create audio file.</DialogContentText>
 
           <Box sx={{ mt: 3 }}>
             <TextField
-              label="Create Audio"
+              label="Text"
               id="outlined-size-normal"
               placeholder="Welcome to consilium."
               onChange={(e) => setAddInputText(e.target.value)}
@@ -232,7 +195,7 @@ export default function AddAudioDialog({ audioFiles, sortAudioFiles }) {
               onClick={handleCreateNew}
               disabled={audioUrl === ""}
             >
-              Create New Audio
+              Generate New Audio
             </Button>
           </Box>
         </DialogContent>

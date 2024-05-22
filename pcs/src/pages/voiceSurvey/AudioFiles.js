@@ -1,11 +1,18 @@
 import axios from "axios";
 import React, { useEffect, useState } from "react";
 import { TextField, IconButton, Stack, Pagination } from "@mui/material";
-import { Search } from "@mui/icons-material";
+import {
+  PauseCircleFilledOutlined,
+  PlayArrowOutlined,
+  PlayArrowRounded,
+  Search,
+} from "@mui/icons-material";
 import { BiSolidAddToQueue } from "react-icons/bi";
 import { motion } from "framer-motion";
 import { DNA } from "react-loader-spinner";
 import AddAudioDialog from "../../modals/AddAudioModal";
+import { FaRegCirclePlay } from "react-icons/fa6";
+import { MdOutlinePauseCircle } from "react-icons/md";
 
 const AudioFiles = ({ accessToken }) => {
   const [audioFiles, setAudioFiles] = useState([]);
@@ -16,6 +23,13 @@ const AudioFiles = ({ accessToken }) => {
   const [itemsPerPage] = useState(12);
   const [searchTerm, setSearchTerm] = useState("");
   const [audioLoading, setAudioLoading] = useState(false);
+  const [currentCardId, setCurrentCardId] = useState("");
+  const [audioUrl, setAudioUrl] = useState("");
+  const [tempAudioUrl, setTempAudioUrl] = useState("");
+  const [isExpanded, setIsExpanded] = useState(false);
+  const [playAudio, setPlayAudio] = useState(false);
+  const [fetchingUrl, setFetchingUrl] = useState(false);
+  const audio = new Audio();
 
   useEffect(() => {
     const filtered = audioFiles.filter((item) =>
@@ -24,7 +38,30 @@ const AudioFiles = ({ accessToken }) => {
     setFilteredData(filtered);
   }, [audioFiles, searchTerm]);
 
-  // fetch and sort audio file
+  const fetchAudio = async (id) => {
+    try {
+      setFetchingUrl(true);
+      const headers = {
+        "Content-Type": "application/json",
+        Authorization: `Bearer ${accessToken}`,
+      };
+      const response = await axios.get(
+        `https://api.wxcc-us1.cisco.com/organization/69fc3aba-280a-4f8e-b449-2c198d78569b/audio-file/${id}?includeUrl=true`,
+        {
+          headers: headers,
+        }
+      );
+      const url = response.data.url;
+      audio.src = url;
+      audio.play();
+      setTempAudioUrl(url);
+      setIsExpanded(true);
+      setFetchingUrl(false);
+    } catch (error) {
+      console.error("Error fetching audio:", error);
+    }
+  };
+
   const sortAudioFiles = async () => {
     setLoading(true);
     try {
@@ -40,7 +77,6 @@ const AudioFiles = ({ accessToken }) => {
       const sortedData = data.sort(
         (a, b) => new Date(b.createdTime) - new Date(a.createdTime)
       );
-      console.log(sortedData);
       setAudioFiles(sortedData);
       setLoading(false);
     } catch (err) {
@@ -58,8 +94,8 @@ const AudioFiles = ({ accessToken }) => {
 
   return (
     <>
-      <div className="w-full relative">
-        <div className="w-full bg-shade1 px-5 fixed top-0 py-2 z-10">
+      <div className="w-full relative pb-12   ">
+        <div className="w-full bg-shade1 px-5 fixed top-0 py-2   ">
           <div className="flex ">
             <div className="bg-slate-100 inline-block rounded-md">
               {" "}
@@ -78,15 +114,6 @@ const AudioFiles = ({ accessToken }) => {
                 }}
               />
             </div>
-            {/* <motion.div
-              whileTap={{ scale: 0.8 }}
-              className="flex items-center justify-between gap-2 cursor-pointer hover:bg-yellow-400 duration-200 bg-yellow-300 pr-3   fixed right-4 rounded-full "
-            >
-              <div className="bg-yellow-500 flex items-center justify-center h-10 w-10 text-white text-lg rounded-full">
-                <BiSolidAddToQueue />
-              </div>
-              <span className="font-semibold">Add Audio</span>
-            </motion.div> */}
             <AddAudioDialog
               audioFiles={audioFiles}
               sortAudioFiles={sortAudioFiles}
@@ -94,9 +121,7 @@ const AudioFiles = ({ accessToken }) => {
           </div>
         </div>
 
-        {/* **********************************************  content ******************************************  */}
-
-        <div className=" flex gap-2 flex-wrap mt-16 px-7">
+        <div className=" flex gap-2 flex-wrap mt-16 px-7   ">
           {loading ? (
             <div className="w-full h-[calc(100vh-60px)]  flex justify-center items-center">
               <DNA
@@ -116,29 +141,46 @@ const AudioFiles = ({ accessToken }) => {
                 animate={{ x: 0, opacity: 1 }}
                 transition={{ duration: 0.2 }}
                 key={item.id}
-                className="rounded-md shadow-md p-2 w-[400px]"
+                className="rounded-md shadow-md p-2 w-[400px]   "
               >
-                <div className="flex justify-between gap-2 bg-shade1 rounded-full p-2 ">
+                <motion.div
+                  onClick={() => {
+                    fetchAudio(item.id);
+                  }}
+                  className="flex justify-between gap-2 cursor-pointer bg-shade1 rounded-full p-2 "
+                >
                   <p className="bg-yellow-100  w-[150px] overflow-clip font-semibold rounded-full px-2 py-1">
                     {item.name}{" "}
                   </p>
                   <p className="bg-shade4 text-white rounded-full px-2 py-1 font-semibold ">
                     {new Date(item.createdTime).toLocaleString()}
                   </p>
-                </div>
-                {/* audio */}
-                <div className="w-full flex items-center justify-center mt-4">
-                  {/* <audio controls className="ml-4">
-                    <source src={item.blobId} type="audio/wav" />
-                    Your browser does not support the audio element.
-                  </audio> */}
-                </div>
+                </motion.div>
+                {fetchingUrl ? (
+                  <DNA />
+                ) : (
+                  audioUrl !== "" && (
+                    <div className="" onClick={() => setPlayAudio(!playAudio)}>
+                      {playAudio ? (
+                        <button onClick={() => audio.play()}>
+                          {" "}
+                          <FaRegCirclePlay />
+                        </button>
+                      ) : (
+                        <button onClick={() => audio.pause()}>
+                          {" "}
+                          <MdOutlinePauseCircle />
+                        </button>
+                      )}
+                    </div>
+                  )
+                )}
               </motion.div>
             ))
           )}
         </div>
 
-        <div className="w-full fixed bottom-[40px] pr-[10rem] py-2 bg-slate-200 flex justify-center items-center">
+        <div className="w-full fixed bottom-[40px] pr-[10rem] py-2 bg-slate-200  flex justify-center items-center">
           <Pagination
             count={Math.ceil(filteredData.length / itemsPerPage)}
             page={currentPage}

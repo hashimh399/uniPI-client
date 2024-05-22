@@ -197,7 +197,7 @@ const SideBar = ({
 
   return (
     <>
-      <div className="main-container relative  z-40 ">
+      <div className="main-container relative ">
         <motion.div
           animate={{
             width: isOpen ? "240px" : "60px",

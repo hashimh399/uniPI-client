@@ -243,21 +243,21 @@ const Templets = ({ accessToken }) => {
   // ********************************************
   const cards = [
     {
-      title: "Banking Experience",
+      title: "Operations",
       tootlip: "info",
 
-      info: "Welcome to our banking survey! Your feedback is crucial in helping us improve our services to better meet your needs. This survey is designed to gather insights into your banking experience and preferences.",
+      info: "Welcome to our Operations Survey Service! We specialize in facilitating smooth and efficient surveys tailored to your operational needs. From optimizing survey distribution to analyzing results, our dedicated team ensures a seamless process from start to finish. ",
       image:
-        "https://images.unsplash.com/photo-1591033594798-33227a05780d?q=80&w=1959&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D",
+        "https://img.freepik.com/free-vector/pull-request-concept-illustration_114360-5386.jpg?t=st=1716279687~exp=1716283287~hmac=6eb52d9d0a0589f23d73da77ff861accf08a176a239b4c2642727dd3b374915f&w=1060",
       surveyFor: "3 Questions",
       audioFiles: [`${sampleAudio}`, `${sampleAudio}`, `${sampleAudio}`],
     },
     {
-      title: "Shopping Experience ",
+      title: "Management ",
       tootlip: "info",
-      info: "Welcome to our banking survey! Your feedback is crucial in helping us improve our services to better meet your needs. This survey is designed to gather insights into your banking experience and preferences.",
+      info: "Welcome to our Survey Management Service! We specialize in helping businesses conduct efficient and insightful surveys.",
       image:
-        "https://images.unsplash.com/photo-1555529669-26f9d103abdd?w=500&auto=format&fit=crop&q=60&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8NzV8fHNob3BwaW5nfGVufDB8fDB8fHww",
+        "https://img.freepik.com/free-vector/research-paper-concept-illustration_114360-8122.jpg?t=st=1716279563~exp=1716283163~hmac=f9636f4bd0bf2e8ec53a93f930d0ab204f8537a2868fe5c5c9053bf87d72ee41&w=740",
       surveyFor: "3 Questions",
       audioFiles: [
         "Q1_audio_file.mp3",
@@ -266,10 +266,10 @@ const Templets = ({ accessToken }) => {
       ],
     },
     {
-      title: "Consilium Services",
+      title: "Accounts",
       tootlip: "info",
-      info: "Welcome to our banking survey! Your feedback is crucial in helping us improve our services to better meet your needs. This survey is designed to gather insights into your banking experience and preferences.",
-      image: `${consiliumLogo}`,
+      info: "Introducing our Account Survey Service! We provide comprehensive support for your survey needs, ensuring accurate data collection and analysis. ",
+      image: `https://img.freepik.com/free-vector/finance-financial-performance-concept-illustration_53876-40450.jpg?t=st=1716279471~exp=1716283071~hmac=06f787387aa22d371994104ef3fac07d9b56bb2772031c52ce930b43a77e7eba&w=900`,
       surveyFor: "3 Questions",
       audioFiles: [
         "Q1_audio_file.mp3",
@@ -302,7 +302,7 @@ const Templets = ({ accessToken }) => {
                   <DialogContent
                     style={{ minWidth: "500px", minHeight: "100px" }}
                   >
-                    Please select the Entry Point
+                    Please the Entry Point
                   </DialogContent>
                   <div className="px-3 -pt-3">
                     <TextField
