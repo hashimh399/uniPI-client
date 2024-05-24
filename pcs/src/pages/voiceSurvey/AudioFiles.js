@@ -25,11 +25,11 @@ const AudioFiles = ({ accessToken }) => {
   const [audioLoading, setAudioLoading] = useState(false);
   const [currentCardId, setCurrentCardId] = useState("");
   const [audioUrl, setAudioUrl] = useState("");
+  const [audio, setAudio] = useState(null);
   const [tempAudioUrl, setTempAudioUrl] = useState("");
-  const [isExpanded, setIsExpanded] = useState(false);
+  const [expandedCardId, setExpandedCardId] = useState("");
   const [playAudio, setPlayAudio] = useState(false);
   const [fetchingUrl, setFetchingUrl] = useState(false);
-  const audio = new Audio();
 
   useEffect(() => {
     const filtered = audioFiles.filter((item) =>
@@ -52,15 +52,29 @@ const AudioFiles = ({ accessToken }) => {
         }
       );
       const url = response.data.url;
+
+      setAudioUrl(url);
+      setAudio(new Audio(audioUrl));
       audio.src = url;
-      audio.play();
-      setTempAudioUrl(url);
-      setIsExpanded(true);
+
       setFetchingUrl(false);
     } catch (error) {
       console.error("Error fetching audio:", error);
+    } finally {
+      setFetchingUrl(false);
     }
   };
+
+  const toggleAudioPlay = (playAudio) => {
+    if (playAudio) {
+      audio.pause();
+    } else {
+      audio.play();
+    }
+    setPlayAudio(!playAudio);
+  };
+
+  // play and pause the audio
 
   const sortAudioFiles = async () => {
     setLoading(true);
@@ -121,7 +135,7 @@ const AudioFiles = ({ accessToken }) => {
           </div>
         </div>
 
-        <div className=" flex gap-2 flex-wrap mt-16 px-7   ">
+        <div className=" flex flex-wrap  gap-2  mt-16 px-7   ">
           {loading ? (
             <div className="w-full h-[calc(100vh-60px)]  flex justify-center items-center">
               <DNA
@@ -145,6 +159,7 @@ const AudioFiles = ({ accessToken }) => {
               >
                 <motion.div
                   onClick={() => {
+                    setExpandedCardId(item.id);
                     fetchAudio(item.id);
                   }}
                   className="flex justify-between gap-2 cursor-pointer bg-shade1 rounded-full p-2 "
@@ -156,31 +171,29 @@ const AudioFiles = ({ accessToken }) => {
                     {new Date(item.createdTime).toLocaleString()}
                   </p>
                 </motion.div>
-                {fetchingUrl ? (
-                  <DNA />
-                ) : (
-                  audioUrl !== "" && (
-                    <div className="" onClick={() => setPlayAudio(!playAudio)}>
-                      {playAudio ? (
-                        <button onClick={() => audio.play()}>
-                          {" "}
-                          <FaRegCirclePlay />
+                {expandedCardId === item.id && (
+                  <motion.div>
+                    {fetchingUrl ? (
+                      <DNA />
+                    ) : (
+                      <div className="p-2">
+                        <button onClick={() => toggleAudioPlay(playAudio)}>
+                          {playAudio ? (
+                            <MdOutlinePauseCircle />
+                          ) : (
+                            <FaRegCirclePlay />
+                          )}
                         </button>
-                      ) : (
-                        <button onClick={() => audio.pause()}>
-                          {" "}
-                          <MdOutlinePauseCircle />
-                        </button>
-                      )}
-                    </div>
-                  )
+                      </div>
+                    )}
+                  </motion.div>
                 )}
               </motion.div>
             ))
           )}
         </div>
 
-        <div className="w-full fixed bottom-[40px] pr-[10rem] py-2 bg-slate-200  flex justify-center items-center">
+        <div className="w-full fixed bottom-[40px] pr-[10rem] py-2 bg-slate-200 flex justify-center items-center">
           <Pagination
             count={Math.ceil(filteredData.length / itemsPerPage)}
             page={currentPage}
