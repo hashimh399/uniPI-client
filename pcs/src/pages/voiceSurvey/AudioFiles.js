@@ -7,26 +7,23 @@ import {
   PlayArrowRounded,
   Search,
 } from "@mui/icons-material";
-import { BiSolidAddToQueue } from "react-icons/bi";
+
 import { motion } from "framer-motion";
 import { DNA } from "react-loader-spinner";
 import AddAudioDialog from "../../modals/AddAudioModal";
-import { FaRegCirclePlay } from "react-icons/fa6";
-import { MdOutlinePauseCircle } from "react-icons/md";
 
 const AudioFiles = ({ accessToken }) => {
   const [audioFiles, setAudioFiles] = useState([]);
   const [loading, setLoading] = useState(false);
-  const [data, setData] = useState([]);
+
   const [filteredData, setFilteredData] = useState([]);
   const [currentPage, setCurrentPage] = useState(1);
-  const [itemsPerPage] = useState(12);
+  const [itemsPerPage] = useState(20);
   const [searchTerm, setSearchTerm] = useState("");
-  const [audioLoading, setAudioLoading] = useState(false);
-  const [currentCardId, setCurrentCardId] = useState("");
+
   const [audioUrl, setAudioUrl] = useState("");
   const [audio, setAudio] = useState(null);
-  const [tempAudioUrl, setTempAudioUrl] = useState("");
+
   const [expandedCardId, setExpandedCardId] = useState("");
   const [playAudio, setPlayAudio] = useState(false);
   const [fetchingUrl, setFetchingUrl] = useState(false);
@@ -54,7 +51,7 @@ const AudioFiles = ({ accessToken }) => {
       const url = response.data.url;
 
       setAudioUrl(url);
-      setAudio(new Audio(audioUrl));
+      setAudio(new Audio(url));
       audio.src = url;
 
       setFetchingUrl(false);
@@ -177,13 +174,17 @@ const AudioFiles = ({ accessToken }) => {
                       <DNA />
                     ) : (
                       <div className="p-2">
-                        <button onClick={() => toggleAudioPlay(playAudio)}>
+                        <audio controls className="ml-4">
+                          <source src={audioUrl} type="audio/wav" />
+                          Your browser does not support the audio element.
+                        </audio>
+                        {/* <button onClick={() => toggleAudioPlay(playAudio)}>
                           {playAudio ? (
                             <MdOutlinePauseCircle />
                           ) : (
                             <FaRegCirclePlay />
                           )}
-                        </button>
+                        </button> */}
                       </div>
                     )}
                   </motion.div>

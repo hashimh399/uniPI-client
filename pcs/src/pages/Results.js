@@ -83,7 +83,6 @@ function Results() {
             <TextField
               select
               variant="standard"
-              autoFocus
               label="Live Surveys"
               value={liveSurvey}
               sx={{ width: 250 }}
