@@ -19,6 +19,10 @@ import Templets from "./voiceSurvey/Templets";
 import Voice from "./Queue_statistics/Voice";
 import Chat from "./Queue_statistics/Chat";
 import AudioFiles from "./voiceSurvey/AudioFiles";
+import Whatsapp from "./digital channels/Whatsapp";
+import Email from "./digital channels/Email";
+import LiveChat from "./digital channels/LiveChat";
+import Messenger from "./digital channels/Messenger";
 
 function Home({
   userDetails,
@@ -93,19 +97,22 @@ function Home({
             <Route path="voice" element={<Voice />}></Route>
             <Route path="chat" element={<Chat />}></Route>
           </Route>
-          <Route
-            path="/digitalchannel/dashboard"
-            element={<DigitalDashboard />}
-          >
-            <Route
-              path=""
-              element={<ChatTraffic agentData={agentData} />}
-            ></Route>
-            <Route
-              path="chat"
-              element={<ChatTraffic agentData={agentData} />}
-            ></Route>
-            <Route path="workforce" element={<WorkforceMetrics />}></Route>
+          <Route path="/digitalchannel">
+            <Route path="whatsapp" element={<Whatsapp />}></Route>
+            <Route path="email" element={<Email />}></Route>
+            <Route path="livechat" element={<LiveChat />}></Route>
+            <Route path="messenger" element={<Messenger />}></Route>
+            <Route path="dashboard" element={<DigitalDashboard />}>
+              <Route
+                path=""
+                element={<ChatTraffic agentData={agentData} />}
+              ></Route>
+              <Route
+                path="chat"
+                element={<ChatTraffic agentData={agentData} />}
+              ></Route>
+              <Route path="workforce" element={<WorkforceMetrics />}></Route>
+            </Route>
           </Route>
         </Routes>
       </div>

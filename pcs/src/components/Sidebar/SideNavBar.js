@@ -24,7 +24,10 @@ import MenuItem from "@mui/material/MenuItem";
 import ListItemIcon from "@mui/material/ListItemIcon";
 import Divider from "@mui/material/Divider";
 import IconButton from "@mui/material/IconButton";
-
+import { IoLogoWhatsapp } from "react-icons/io";
+import { FaFacebookMessenger } from "react-icons/fa";
+import { SiLivechat } from "react-icons/si";
+import { MdEmail } from "react-icons/md";
 import Tooltip from "@mui/material/Tooltip";
 
 import Settings from "@mui/icons-material/Settings";
@@ -51,6 +54,26 @@ const routes = [
         path: "/digitalchannel/dashboard",
         name: "Dashboard",
         icon: <MdDashboardCustomize />,
+      },
+      {
+        path: "/digitalchannel/whatsapp",
+        name: "WhatsApp",
+        icon: <IoLogoWhatsapp />,
+      },
+      {
+        path: "/digitalchannel/livechat",
+        name: "Live Chat",
+        icon: <SiLivechat />,
+      },
+      {
+        path: "/digitalchannel/messenger",
+        name: "Facebook Messenger",
+        icon: <FaFacebookMessenger />,
+      },
+      {
+        path: "/digitalchannel/email",
+        name: "Email",
+        icon: <MdEmail />,
       },
     ],
   },
