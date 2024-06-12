@@ -2,6 +2,7 @@ import React, { useEffect, useState } from "react";
 import { RiChatVoiceFill } from "react-icons/ri";
 import "../../styles/voiceSurvey.css";
 import noData from "../../assets/no_data.jpg";
+import { motion } from "framer-motion";
 import {
   TextField,
   IconButton,
@@ -41,8 +42,8 @@ const Voice = () => {
   };
 
   return (
-    <div className="relative w-full">
-      <div className="w-full px-3 py-2 flex items-center fixed top-0 bg-shade1  ">
+    <motion.div className="relative w-full">
+      <motion.div className="w-full px-3 py-2 flex items-center fixed top-0 bg-shade1  ">
         <div className="flex rounded-full text-white bg-shade4 items-center justify-center pl-2 gap-2">
           <h1 className="font-semibold">Voice Queue</h1>
           <span className="rounded-full h-10 w-10 text-2xl bg-green-800 flex items-center justify-center">
@@ -66,11 +67,16 @@ const Voice = () => {
             }}
           />
         </div>
-      </div>
+      </motion.div>
 
-      <div className="mt-16 table-container  px-7">
+      <motion.div
+        initial={{ x: 80, opacity: 0 }}
+        animate={{ x: 0, opacity: 1 }}
+        transition={{ duration: 0.2, type: "spring", stiffness: 20 }}
+        className="mt-16 table-container "
+      >
         <Table className="custom-table ">
-          <TableHead className=" bg-white">
+          <TableHead>
             <TableRow>
               <TableCell>S.No.</TableCell>
               <TableCell>Queue Name</TableCell>
@@ -121,8 +127,8 @@ const Voice = () => {
             )}
           </TableBody>
         </Table>
-      </div>
-    </div>
+      </motion.div>
+    </motion.div>
   );
 };
 

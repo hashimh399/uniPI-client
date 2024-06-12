@@ -69,7 +69,10 @@ function Home({
               />
             }
           ></Route>
-          <Route path="/results" element={<Results />}></Route>
+          <Route
+            path="/results"
+            element={<Results getAllDetails={getAllDetails} />}
+          ></Route>
 
           <Route path="/voice-survey" element={<VoiceSurvey />}>
             <Route

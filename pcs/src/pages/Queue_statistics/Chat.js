@@ -2,6 +2,7 @@ import React, { useEffect, useState } from "react";
 import { RiWechatFill } from "react-icons/ri";
 import "../../styles/voiceSurvey.css";
 import noData from "../../assets/no_data.jpg";
+import { motion } from "framer-motion";
 import {
   TextField,
   IconButton,
@@ -43,7 +44,7 @@ const Chat = () => {
   };
 
   return (
-    <div className="relative w-full ">
+    <motion.div className="relative w-full ">
       <div className="w-full px-3 py-2 flex items-center fixed top-0 bg-shade1">
         <div className="flex rounded-full text-shade2 bg-yellow-400 items-center justify-center pl-2 gap-2">
           <h1 className="font-semibold">Chat Queue</h1>
@@ -69,7 +70,12 @@ const Chat = () => {
         </div>
       </div>
 
-      <div className="mt-16 table-container  ">
+      <motion.div
+        initial={{ x: 80, opacity: 0 }}
+        animate={{ x: 0, opacity: 1 }}
+        transition={{ duration: 0.2, type: "spring", stiffness: 20 }}
+        className="mt-16 table-container  "
+      >
         <Table className="custom-table px-7">
           <TableHead>
             <TableRow>
@@ -121,8 +127,8 @@ const Chat = () => {
             )}
           </TableBody>
         </Table>
-      </div>
-    </div>
+      </motion.div>
+    </motion.div>
   );
 };
 
