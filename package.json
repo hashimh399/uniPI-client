@@ -4,6 +4,7 @@
   },
   "dependencies": {
     "@mui/lab": "^5.0.0-alpha.170",
+    "adaptivecards": "^3.0.3",
     "axios": "^1.6.8",
     "cors": "^2.8.5",
     "dotenv": "^16.4.5",

@@ -63,15 +63,6 @@ function Results({ getAllDetails }) {
     (question1Counts.Detractors / totalSurveyResponse) * 100;
   const NPS = promoterPercentage - detractorsPercentage;
 
-  // console.log(
-  //   "NPS SCORE",
-  //   scoreNps,
-  //   question1Counts,
-  //   totalSurveyResponse,
-  //   promoterPercentage,
-  //   detractorsPercentage
-  // );
-
   // *****************************  CES CALCULATION ************************************
 
   const calculateAverage = (data, question) => {
@@ -96,6 +87,77 @@ function Results({ getAllDetails }) {
 
   const CSAT = CSATCalculation(scores, "question3");
 
+  // ***************** CES  messages ***********************
+
+  const CESMessage = (score) => {
+    if (score >= 8)
+      return {
+        message: (
+          <span>
+            <strong>Effort level: Low.</strong> Thanks for the positive
+            feedback, we're glad our process is working well.
+          </span>
+        ),
+        emoji: "😊",
+      };
+    if (score >= 5)
+      return {
+        message: (
+          <span>
+            <strong>Effort level: Moderate.</strong> Feedback is helping us
+            enhance our services and reduce effort.
+          </span>
+        ),
+        emoji: "🙂",
+      };
+    if (score >= 3)
+      return {
+        message: (
+          <span>
+            <strong>Effort level: High.</strong> We're continuously working to
+            improve our processes and make interactions easier.
+          </span>
+        ),
+        emoji: "😐",
+      };
+    return { message: "Dissatisfied", emoji: "☹️" };
+  };
+
+  // ***********************  CSAT MESSAGE ************************
+  const getSatisfactionMessage = (score) => {
+    if (score >= 8)
+      return {
+        message: (
+          <span>
+            <strong>Satisfaction level: High.</strong> Service quality is
+            meeting expectations.
+          </span>
+        ),
+        emoji: "😊",
+      };
+    if (score >= 5)
+      return {
+        message: (
+          <span>
+            <strong>Satisfaction level: Moderate.</strong> There is room for
+            improvement in service quality.
+          </span>
+        ),
+        emoji: "🙂",
+      };
+    if (score >= 3)
+      return {
+        message: (
+          <span>
+            <strong>Satisfaction level: Low.</strong> Significant improvements
+            are needed in service quality.
+          </span>
+        ),
+        emoji: "😐",
+      };
+    return { message: "Very dissatisfied", emoji: "☹️" };
+  };
+
   const [liveSurvey, setLiveSurvey] = useState("");
   const chartStyle = {
     width: 80,
@@ -114,12 +176,14 @@ function Results({ getAllDetails }) {
       fullName: "Customer Effort Score",
       score: question2Avg,
       value: 10,
+      message: CESMessage(question2Avg),
     },
     {
       name: "CSAT",
       fullName: "Customer Satisfaction Score",
       score: CSAT,
       value: 10,
+      message: getSatisfactionMessage(CSAT),
     },
   ];
 

@@ -169,6 +169,17 @@ export default function ResultCard({ data, index }) {
                 <Typography sx={{ fontSize: 12 }}>Detractoer Score</Typography>
               </Box>
             )}
+
+            {data.message && (
+              <Box className="w-full flex justify-between">
+                <Typography className="w-[80%]">
+                  {data.message.message}
+                </Typography>
+                <Typography className="w-[20%]">
+                  {data.message.emoji}
+                </Typography>
+              </Box>
+            )}
           </Box>
           {/* <CardActions>
             <Button size="small">Learn More</Button>
